@@ -46,17 +46,32 @@ Add line-by-line comments wheres prompted in the code below, explaining what eac
 # The line below...
 time_yr <- seq(from = 0, to = 8, by = 1)
 
+# HD Created a sequence vector to represent time so 8 years 
+
 # The line below...
 proj_year <- matrix(ncol = length(fish_year0), nrow = length(time_yr))
 
+#HD Created an empty matrix to store the output. Matrix is based on the two vectors we made for fish_year0 and time
+
 # The line below...
 proj_year[1, ] <- fish_year0
+
+# HD We are populating the initial conditions into the matrix from the vector fish_year0. 
+# HD indexing 2-D structures use [row, col]
+# HD so that means when we use proj_year[1,] we are indexing for the first row
 
 # The for loop below...
 for (i in 2:length(time_yr)) {
   proj_year[i,] <- fish_leslie %*% proj_year[i-1,]
 }
 
+# HD 2:length(time_yr) is our range because we are skipping year 0 which has our initial conditions in it. 
+# HD proj_year[i,] means were populating by rows
+# HD proj_year[i-1,] is starting at year 1 or element 2 ([1])
+# HD fish_leslie dot product proj_year[i-1,]
+# HD proj_year[i-1,] has -1 because that is what we're multiplying the matrix with aka the initial conditions. So proj_year[i-1,] is proj_year[2-1] which is eggs: 5000, fry: 8000, juvenile: 600, adult:400
+# HD from 2 to 9 run this loop and we are starting at 2 because we filled the first row with our initial conditions
+# HD What gets populated in row 2? proj_year[i,]. So leslie matrix 
 
 # The rest is wrangling & visualization (run to check it out):
 colnames(proj_year) <- c("eggs", "fry", "juvenile", "adult")
